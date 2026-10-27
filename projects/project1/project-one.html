@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AJ Schacht's Portfolio</title>
+  <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/10456/10456439.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="topnav">
+  <a href="/index.html#home">Home</a>
+  <a href="/index.html#projects">Projects</a>
+  <a href="/index.html#interactive">Interactive</a>
+  <a href="/index.html#contact">Contact</a>
+  <a href="/index.html#about">About</a>
+</nav>
+
+<section class="project-overview">
+
+  <h2 class="section-title">Project Overview</h2>
+
+  <div class="overview-content">
+
+    <p>
+      This project demonstrates a simulated enterprise endpoint setup workflow using PowerShell.
+      The script automates common administrative tasks such as software installation checks,
+      security configuration, firewall policy application, and network resource mapping.
+    </p>
+
+    <p>
+      This project was developed and tested in a controlled environment using PowerShell to simulate enterprise endpoint configuration workflows. 
+      Core logic was validated through system queries and conditional checks to reflect real administrative tasks without modifying the host system.
+    </p>
+
+  </div>
+
+</section>
+
+
+<div class="tech-section">
+
+  <h2 class="tech-title">Technologies Used</h2>
+
+  <div class="tech-stack">
+    <span class="tech">PowerShell</span>
+    <span class="tech">Windows Administration</span>
+    <span class="tech">Automation</span>
+    <span class="tech">Security Policy</span>
+    <span class="tech">Enterprise IT</span>
+  </div>
+
+</div>
+
+<div class="workflow-section">
+
+  <h2 class="section-title">Endpoint Configuration Workflow</h2>
+
+  <div class="workflow-steps">
+
+    <div class="workflow-step">
+      <h3>1. System Initialization</h3>
+      <p>Script verifies the environment and confirms execution in demo mode.</p>
+    </div>
+
+    <div class="workflow-step">
+      <h3>2. Software Verification</h3>
+      <p>Checks for required enterprise software like browsers, compression tools, and VPN clients.</p>
+    </div>
+
+    <div class="workflow-step">
+      <h3>3. Security Configuration</h3>
+      <p>Applies firewall policy rules and prepares the endpoint for enterprise network access.</p>
+    </div>
+
+    <div class="workflow-step">
+      <h3>4. Endpoint Ready</h3>
+      <p>Completes the automated setup workflow and confirms configuration status.</p>
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+<section class="code-section">
+
+<h2>Script Logic Preview</h2>
+
+<pre><code>
+# Author: Aron (AJ) Schacht Jr.
+# ==========================================
+
+function Install-Software {
+    param(
+    [Parameter(Mandatory=$true)]
+    [string]$SoftwareName
+    )
+    $DoRealInstall = $false
+    Write-Host "Checking for $SoftwareName..."
+
+    $InstalledSoftware = Get-ItemProperty `
+        HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* `
+        -ErrorAction SilentlyContinue |
+        Where-Object { $_.DisplayName -like "*$SoftwareName*" }
+
+    if ($InstalledSoftware) {
+        Write-Host "$SoftwareName is already installed."
+    }
+    else {
+        if ($DoRealInstall) {
+            Write-Host "Installing $SoftwareName..."
+            winget install $SoftwareName
+        }
+        else {
+            Write-Host "[SIMULATION] In production, this would trigger software deployment via Intune or software distribution tools."
+        }
+    }
+}
+
+Install-Software "Microsoft Teams"
+Install-Software "Google Chrome"
+
+</code></pre>
+
+<p class="code-note">
+Some implementation details are intentionally redacted. Full workflow demonstrated in a controlled test environment.
+</p>
+
+</section>
+
+
+
+<section class="terminal-output">
+
+<h2 class="section-title">System Validation (Script Execution Output)</h2>
+
+<p>
+The following output demonstrates how the script checks for installed software using system registry queries.
+</p>
+
+<h3>Software Verification</h3>
+<pre class="terminal">
+Checking for Microsoft Teams...
+Microsoft Teams is already installed.
+
+Checking for Google Chrome...
+Google Chrome is already installed.
+</pre>
+
+<h3>Script Behavior</h3>
+<pre class="terminal">
+If software is not found:
+Software would be installed here.
+</pre>
+
+</section>
+
+  
+  <!--Gallery-->
+<section class="evidence-section">
+
+<h2 class="section-title">Visual Evidence (VM Screenshots)</h2>
+
+<p>
+Screenshots captured directly from the virtual machine during configuration and validation.
+</p>
+
+<div class="screenshot-grid">
+
+  <img src="images/script-output-sim.png" alt="SSH configuration showing disabled password authentication">
+  
+  <img src="images/real-install-true.png" alt="UFW firewall active with OpenSSH allowed">
+  
+  <img src="images/script-output-real.png" alt="Open ports showing only SSH listening">
+  
+
+</div>
+
+</section>
+  
+<script src="js/enlarge-image.js"></script>
+
+
+</body>
+</html>
